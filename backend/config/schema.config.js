@@ -9,10 +9,11 @@ const userSchema = new mongoose.Schema({
 }, { versionKey: false })
 
 const contactSchema = new mongoose.Schema({
+    contactOf: { type: mongoose.Schema.Types.ObjectId, require: true },
     lastName: { type: String, required: true, trim: true },
     firstName: { type: String, required: true, trim: true },
     email: { type: String, required: true, minLength: 6, maxLength: 30, trim: true },
-    telephone: { type: Number, required: true, minLength: 8, maxLength: 10 }
+    telephone: { type: String, required: true, minLength: 8, maxLength: 10 }
 }, { versionKey: false })
 
 export { userSchema, contactSchema }

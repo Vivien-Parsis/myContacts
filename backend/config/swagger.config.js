@@ -9,15 +9,15 @@ const swaggerOptions = {
         },
         components: {
             securitySchemes: {
-                jwtToken: {
-                    type: 'apiKey',
-                    in: 'header',
-                    name: 'Authorization',
-                    description: 'JWT brut',
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    description: 'JWT (mettre uniquement le token)',
+                    bearerFormat: 'JWT'
                 },
             },
         },
-        security: [{ jwtToken: [] }],
+        security: [{ bearerAuth: [] }],
     },
     apis: ['./router/*.route.js'],
 }

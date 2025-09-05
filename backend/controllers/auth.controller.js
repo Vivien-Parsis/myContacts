@@ -31,16 +31,20 @@ const authController = {
         }
         const findUser = await userModel.findOne({ email: currentUser.email })
         if (!findUser) {
-            const salt = await bcrypt.genSalt(10)
-            const hashedPassword = await bcrypt.hash(currentUser.password, salt)
-            await userModel.insertOne({
-                email: currentUser.email,
-                password: hashedPassword,
-                lastName: currentUser.lastName,
-                firstName: currentUser.firstName
-            })
-            const jwt = generateToken(currentUser)
-            return res.status(200).send({ token: jwt })
+            try{
+                const salt = await bcrypt.genSalt(10)
+                const hashedPassword = await bcrypt.hash(currentUser.password, salt)
+                await userModel.insertOne({
+                    email: currentUser.email,
+                    password: hashedPassword,
+                    lastName: currentUser.lastName,
+                    firstName: currentUser.firstName
+                })
+                const jwt = generateToken(currentUser)
+                return res.status(200).send({ token: jwt })
+            }catch{
+                res.status(400).send({ message: "error while adding user" })
+            }
         } else {
             res.status(409).send({ message: "user already exist" })
         }

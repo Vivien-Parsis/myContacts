@@ -1,6 +1,6 @@
 import { jwt_secret } from "../config/server.config.js"
 import jwt from "jsonwebtoken"
-import { userModel } from "../models/user.model.js"
+import { userModel } from "../models/users.model.js"
 
 /**
  * Middleware d'authentification
@@ -23,12 +23,13 @@ const checkRouteJwt = async (req, res, next) => {
         const decoded = jwt.verify(token, jwt_secret)
         const userSearch = await userModel.findOne({ email: decoded.email || '' })
         if (userSearch) {
+            req.user = userSearch
             next()
         } else {
-            return res.send({ "message": "error with jwt token" })
+            return res.status(400).send({ "message": "error with jwt token" })
         }
     } catch (err) {
-        return res.send({ "message": "error while decode or search for token", error: err })
+        return res.status(400).send({ "message": "error while decode or search for token", error: err })
     }
 }
 
