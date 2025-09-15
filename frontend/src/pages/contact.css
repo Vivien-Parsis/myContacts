@@ -11,19 +11,33 @@
 .disconnect {
 	margin: 10px;
 }
-.contactContainer {
-	border-bottom: 1px gray solid;
+
+.contactContainer0 {
+	background-color: rgb(244, 244, 244);
 }
-.contactContainer ul {
+.contactContainer1 {
+	background-color: rgb(249, 243, 233);
+}
+.contactContainer1,
+.contactContainer0 {
+	border-bottom: 1px rgb(128, 128, 128) solid;
+}
+.contactContainer1 ul,
+.contactContainer0 ul {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
+	margin:0;
+	padding:1em 0 1em 2em;
 }
-.contactContainer ul * {
+.contactContainer1 ul *,
+.contactContainer0 ul * {
 	margin: 0.1em 0;
 }
-.contactContainer ul a,
-.contactContainer ul button,
+.contactContainer1 ul a,
+.contactContainer1 ul button,
+.contactContainer0 ul a,
+.contactContainer0 ul button,
 .disconnect,
 .addContact button {
 	font-size: 1em;
@@ -35,9 +49,11 @@
 	background-color: rgb(217, 217, 255);
 	padding: 0.1em 0.2em;
 }
-.contactContainer ul a:hover,
-.contactContainer ul button:hover,
+.contactContainer1 ul a:hover,
+.contactContainer1 ul button:hover,
+.contactContainer0 ul a:hover,
+.contactContainer0 ul button:hover,
 .disconnect:hover,
-.addContact button:hover{
-	background-color: rgb(199, 199, 199);
+.addContact button:hover {
+	background-color: rgb(92, 121, 226);
 }

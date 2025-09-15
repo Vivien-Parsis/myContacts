@@ -87,9 +87,9 @@ const Contact = () => {
 		if (!contacts) {
 			return;
 		} else {
-			contacts.map((c) => {
+			contacts.map((c, index) => {
 				res.push(
-					<div key={c._id} className="contactContainer">
+					<div key={c._id} className={`contactContainer${index%2}`}>
 						<ul>
 							<li>Prenom : {c.firstName || "?"}</li>
 							<li>Nom : {c.lastName || "?"}</li>

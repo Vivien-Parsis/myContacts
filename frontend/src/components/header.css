@@ -1,6 +1,6 @@
 header {
-	background-color: aquamarine;
-	border-bottom: 1px gray solid;
+	background-color: rgb(186, 255, 208);
+	border-bottom: 2px rgb(63, 63, 63) solid;
 }
 header h1 {
 	margin: 0;
