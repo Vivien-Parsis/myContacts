@@ -12,10 +12,10 @@ import { userModel } from "../models/users.model.js"
 const checkRouteJwt = async (req, res, next) => {
     const authHeader = req.headers.authorization || ""
     if (!authHeader) {
-        return res.send({ "message": "missing jwt token" })
+        return res.send({ message: "missing jwt token" })
     }
     if (!authHeader.startsWith("Bearer ")) {
-        return res.send({ "message": "missing bearer key" })
+        return res.send({ message: "missing bearer key" })
     }
 
     try {
@@ -27,10 +27,10 @@ const checkRouteJwt = async (req, res, next) => {
             req.user = userSearch
             next()
         } else {
-            return res.status(400).send({ "message": "error with jwt token" })
+            return res.status(400).send({ message: "error with jwt token" })
         }
     } catch (err) {
-        return res.status(400).send({ "message": "error while decode or search for token", error: err })
+        return res.status(400).send({ message: "error while decode or search for token" })
     }
 }
 

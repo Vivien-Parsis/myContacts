@@ -1,0 +1,9 @@
+.modifyContact {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+    margin:10px 0;
+}
+.modifyContact * {
+	margin: 1px 10px;
+}

@@ -58,7 +58,7 @@ const Contact = () => {
 			!newContact.lastName
 		) {
 			alert("manque des informations");
-		} else if (!newContact.telephone.length !== 10) {
+		} else if (newContact.telephone.length !== 10) {
 			alert("longueur du telephone incorrect");
 		} else {
 			await axios
@@ -74,7 +74,6 @@ const Contact = () => {
 					headers: { authorization: "Bearer " + token }
 				})
 				.then((res) => {
-					console.log(res.data);
 					setContacts(res.data);
 				})
 				.catch(() => {
@@ -88,10 +87,9 @@ const Contact = () => {
 		if (!contacts) {
 			return;
 		} else {
-			console.log(contacts);
 			contacts.map((c) => {
 				res.push(
-					<div key={c._id}>
+					<div key={c._id} className="contactContainer">
 						<ul>
 							<li>Prenom : {c.firstName || "?"}</li>
 							<li>Nom : {c.lastName || "?"}</li>
@@ -117,7 +115,6 @@ const Contact = () => {
 				alert("erreur avec le token");
 				return;
 			} else {
-				console.log("e");
 				await axios
 					.get(`${apiUrl}/contact`, {
 						headers: { authorization: "Bearer " + token }
@@ -181,7 +178,7 @@ const Contact = () => {
 				></input>
 				<button type="submit">Ajouter</button>
 			</form>
-			<button onClick={handleDisconnect}>Se deconnecter</button>
+			<button onClick={handleDisconnect} className="disconnect">Se deconnecter</button>
 		</>
 	);
 };

@@ -16,7 +16,6 @@ const ProtectedRoute = ({ children }) => {
 			return children;
 		}
 	} catch (err) {
-		console.log(err);
 		alert("token jwt invalide");
 		localStorage.removeItem("token");
 		return <Navigate to="/login" />;

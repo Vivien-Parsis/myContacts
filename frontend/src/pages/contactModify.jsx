@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { apiUrl } from "../config/server";
 import axios from "axios";
+import "./contactModify.css";
 
 const ContactModify = () => {
 	const location = useLocation();
@@ -20,18 +21,21 @@ const ContactModify = () => {
 		if (!token) {
 			alert("manque token");
 			navigate("/login");
+		} else if (updatedContact.telephone.length !== 10) {
+			alert("telephone incorect");
+		} else {
+			await axios
+				.put(`${apiUrl}/contact`, updatedContact, {
+					headers: { authorization: "Bearer " + token }
+				})
+				.then(() => {
+					navigate("/");
+				})
+				.catch(() => {
+					alert("erreur lors de la modification");
+					navigate("/");
+				});
 		}
-		await axios
-			.put(`${apiUrl}/contact`, updatedContact, {
-				headers: { authorization: "Bearer " + token }
-			})
-			.then(() => {
-				navigate("/");
-			})
-			.catch(() => {
-				alert("erreur lors de la modification");
-				navigate("/");
-			});
 	};
 	const handleChangeModify = (e) => {
 		setUpdatedContact({
@@ -42,7 +46,7 @@ const ContactModify = () => {
 	return (
 		<>
 			<Link to="/">Revenir a mes contacts</Link>
-			<form className="addContact" onSubmit={handleModify}>
+			<form className="modifyContact" onSubmit={handleModify}>
 				<h2>Ajouter un contact</h2>
 				<label htmlFor="firstName">Prenom :</label>
 				<input
