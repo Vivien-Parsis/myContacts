@@ -16,7 +16,6 @@ const contactController = {
             return res.status(422).send({ message: "missing information" })
         } else {
             try {
-                console.log()
                 const newContact = await contactModel.insertOne({
                     lastName: currentContact.lastName,
                     firstName: currentContact.firstName,
@@ -31,16 +30,13 @@ const contactController = {
         }
     },
     deleteContact: async (req, res) => {
-        const contactId = req.body.id || ""
-        if (!contactId) {
-            return res.status(422).send({ message: "missing information" })
-        }
-        const searchContact = await contactModel.findOne({ _id: contactId })
+        const idContact = req.body.id;
+        const searchContact = await contactModel.findOne({ contactOf: req.user.id, _id: idContact })
         if (!searchContact) {
             return res.status(404).send("contact non trouvé")
-        }else{
+        } else {
             try {
-                await contactModel.deleteOne({ _id: contactId })
+                await contactModel.deleteOne({ _id: idContact })
                 return res.status(200).send({ message: "contact deleted" })
             } catch {
                 res.status(400).send({ message: "error while delete contact" })
@@ -55,7 +51,8 @@ const contactController = {
             telephone: req.body.telephone || ""
         }
         const contactId = req.body.id || ""
-        const searchContact = await contactModel.findOne({ _id: contactId })
+        console.log({ _id: contactId, contactOf: req.user.id })
+        const searchContact = await contactModel.findOne({ _id: contactId, contactOf: req.user.id })
         if (!searchContact) {
             return res.status(404).send("contact non trouvé")
         } else {

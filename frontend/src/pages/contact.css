@@ -1,0 +1,9 @@
+.addContact {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+    margin:10px 0;
+}
+.addContact * {
+	margin: 1px 10px;
+}

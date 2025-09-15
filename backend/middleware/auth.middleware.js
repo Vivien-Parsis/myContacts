@@ -21,6 +21,7 @@ const checkRouteJwt = async (req, res, next) => {
     try {
         const token = authHeader.split(' ')[1]
         const decoded = jwt.verify(token, jwt_secret)
+
         const userSearch = await userModel.findOne({ email: decoded.email || '' })
         if (userSearch) {
             req.user = userSearch

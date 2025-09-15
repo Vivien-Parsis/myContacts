@@ -1,0 +1,7 @@
+header {
+	background-color: aquamarine;
+}
+header h1 {
+	margin: 0;
+	padding: .5em .3em;
+}
