@@ -3,57 +3,7 @@
 	align-items: flex-start;
 	flex-direction: column;
 	padding: 10px 0;
-	border-top: 2px gray solid;
 }
 .addContact * {
 	margin: 1px 10px;
-}
-.disconnect {
-	margin: 10px;
-}
-
-.contactContainer0 {
-	background-color: rgb(244, 244, 244);
-}
-.contactContainer1 {
-	background-color: rgb(249, 243, 233);
-}
-.contactContainer1,
-.contactContainer0 {
-	border-bottom: 1px rgb(128, 128, 128) solid;
-}
-.contactContainer1 ul,
-.contactContainer0 ul {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	margin:0;
-	padding:1em 0 1em 2em;
-}
-.contactContainer1 ul *,
-.contactContainer0 ul * {
-	margin: 0.1em 0;
-}
-.contactContainer1 ul a,
-.contactContainer1 ul button,
-.contactContainer0 ul a,
-.contactContainer0 ul button,
-.disconnect,
-.addContact button {
-	font-size: 1em;
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-	border: 1px grey solid;
-	border-radius: 0.1em;
-	background-color: rgb(217, 217, 255);
-	padding: 0.1em 0.2em;
-}
-.contactContainer1 ul a:hover,
-.contactContainer1 ul button:hover,
-.contactContainer0 ul a:hover,
-.contactContainer0 ul button:hover,
-.disconnect:hover,
-.addContact button:hover {
-	background-color: rgb(92, 121, 226);
 }

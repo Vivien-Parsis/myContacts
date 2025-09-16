@@ -35,13 +35,13 @@ const authController = {
             try {
                 const salt = await bcrypt.genSalt(10)
                 const hashedPassword = await bcrypt.hash(currentUser.password, salt)
-                await userModel.insertOne({
+                const insertedUser = await userModel.insertOne({
                     email: currentUser.email,
                     password: hashedPassword,
                     lastName: currentUser.lastName,
                     firstName: currentUser.firstName
                 })
-                currentUser.id = findUser._id
+                currentUser.id = insertedUser._id
                 const jwt = generateToken(currentUser)
                 return res.status(200).send({ token: jwt })
             } catch {

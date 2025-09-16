@@ -31,9 +31,9 @@ const contactController = {
     },
     deleteContact: async (req, res) => {
         const idContact = req.body.id;
-        const searchContact = await contactModel.findOne({ contactOf: req.user.id, _id: idContact })
+        const searchContact = await contactModel.findOne({ contactOf: req.user._id, _id: idContact })
         if (!searchContact) {
-            return res.status(404).send({ message: "contact non trouvé"})
+            return res.status(404).send({ message: "contact non trouvé" })
         } else {
             try {
                 await contactModel.deleteOne({ _id: idContact })
@@ -51,9 +51,9 @@ const contactController = {
             telephone: req.body.telephone || ""
         }
         const contactId = req.body.id || ""
-        const searchContact = await contactModel.findOne({ _id: contactId, contactOf: req.user.id })
+        const searchContact = await contactModel.findOne({ _id: contactId, contactOf: req.user._id })
         if (!searchContact) {
-            return res.status(404).send({ message: "contact non trouvé"})
+            return res.status(404).send({ message: "contact non trouvé" })
         } else {
             await contactModel.updateOne({ _id: contactId }, {
                 lastName: updatedContact.lastName || searchContact.lastName,

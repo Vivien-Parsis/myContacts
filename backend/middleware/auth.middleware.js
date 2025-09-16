@@ -24,7 +24,7 @@ const checkRouteJwt = async (req, res, next) => {
 
         const userSearch = await userModel.findOne({ email: decoded.email || '' })
         if (userSearch) {
-            req.user = userSearch
+            req.user = { _id: userSearch._id }
             next()
         } else {
             return res.status(400).send({ message: "error with jwt token" })

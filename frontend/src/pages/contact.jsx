@@ -97,7 +97,7 @@ const Contact = () => {
 		} else {
 			contacts.map((c, index) => {
 				res.push(
-					<div key={c._id} className={`contactContainer${index % 2}`}>
+					<div key={c._id}>
 						<ul>
 							<li>Prenom : {c.firstName || "?"}</li>
 							<li>Nom : {c.lastName || "?"}</li>
@@ -191,7 +191,7 @@ const Contact = () => {
 				<button type="submit">Ajouter</button>
 				<span style={{ color: "red" }}>{addError}</span>
 			</form>
-			<button onClick={handleDisconnect} className="disconnect">
+			<button onClick={handleDisconnect}>
 				Se deconnecter
 			</button>
 		</>
