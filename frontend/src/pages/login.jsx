@@ -6,6 +6,7 @@ import { apiUrl } from "../config/server";
 
 const Login = () => {
 	const navigate = useNavigate();
+	const [loginError, setLoginError] = useState("");
 	const [formData, setFormData] = useState({
 		email: "",
 		password: ""
@@ -20,6 +21,7 @@ const Login = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		setLoginError("");
 		axios
 			.post(`${apiUrl}/auth/login`, formData)
 			.then((res) => {
@@ -27,11 +29,13 @@ const Login = () => {
 					localStorage.setItem("token", res.data.token);
 					navigate("/");
 				} else {
-					alert("erreur de connexion");
+					console.log("erreur de connexion");
+					setLoginError("erreur de connexion");
 				}
 			})
 			.catch(() => {
-				alert("erreur de connexion serveur");
+				console.log("erreur de connexion serveur");
+				setLoginError("erreur de connexion serveur");
 			});
 	};
 	return (
@@ -57,6 +61,7 @@ const Login = () => {
 			/>
 			<button type="submit">Se connecter</button>
 			<Link to="/register">Pas de compte ? S'inscrire</Link>
+			<span style={{ color: "red" }}>{loginError}</span>
 		</form>
 	);
 };

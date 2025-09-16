@@ -3,9 +3,11 @@ import "./contact.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { apiUrl } from "../config/server";
+import { telephonePattern } from "../config/pattern";
 
 const Contact = () => {
 	const navigate = useNavigate();
+	const [addError, setAddError] = useState("");
 	const [contacts, setContacts] = useState([]);
 	const [newContact, setNewContact] = useState({
 		firstName: "",
@@ -35,7 +37,7 @@ const Contact = () => {
 			})
 			.then()
 			.catch(() => {
-				alert("erreur lors de la récupération des contacts");
+				console.log("erreur lors de la récupération des contacts");
 			});
 		await axios
 			.get(`${apiUrl}/contact`, {
@@ -45,11 +47,12 @@ const Contact = () => {
 				setContacts(res.data);
 			})
 			.catch(() => {
-				alert("erreur lors de la récupération des contacts");
+				console.log("erreur lors de la récupération des contacts");
 			});
 	};
 
 	const handleAdd = async (e) => {
+		setAddError("");
 		e.preventDefault();
 		if (
 			!newContact.email ||
@@ -57,9 +60,13 @@ const Contact = () => {
 			!newContact.firstName ||
 			!newContact.lastName
 		) {
-			alert("manque des informations");
-		} else if (newContact.telephone.length !== 10) {
-			alert("longueur du telephone incorrect");
+			console.log("manque des informations");
+		} else if (
+			newContact.telephone.length !== 10 ||
+			!newContact.telephone.match(telephonePattern)
+		) {
+			console.log("telephone incorrect");
+			setAddError("telephone incorrect");
 		} else {
 			await axios
 				.post(`${apiUrl}/contact`, newContact, {
@@ -67,7 +74,8 @@ const Contact = () => {
 				})
 				.then()
 				.catch(() => {
-					alert("erreur lors de l'ajout des contacts");
+					console.log("erreur lors de l'ajout des contacts");
+					setAddError("erreur lors de l'ajout des contacts");
 				});
 			await axios
 				.get(`${apiUrl}/contact`, {
@@ -77,7 +85,7 @@ const Contact = () => {
 					setContacts(res.data);
 				})
 				.catch(() => {
-					alert("erreur lors de la récupération des contacts");
+					console.log("erreur lors de la récupération des contacts");
 				});
 		}
 	};
@@ -89,7 +97,7 @@ const Contact = () => {
 		} else {
 			contacts.map((c, index) => {
 				res.push(
-					<div key={c._id} className={`contactContainer${index%2}`}>
+					<div key={c._id} className={`contactContainer${index % 2}`}>
 						<ul>
 							<li>Prenom : {c.firstName || "?"}</li>
 							<li>Nom : {c.lastName || "?"}</li>
@@ -112,7 +120,7 @@ const Contact = () => {
 	useEffect(() => {
 		const fetchContact = async () => {
 			if (!token) {
-				alert("erreur avec le token");
+				console.log("erreur avec le token");
 				return;
 			} else {
 				await axios
@@ -126,12 +134,16 @@ const Contact = () => {
 						setContacts(res.data);
 					})
 					.catch(() => {
-						alert("erreur lors de la récupération des contacts");
+						console.log(
+							"erreur lors de la récupération des contacts"
+						);
+						localStorage.removeItem("token");
+						navigate("/login");
 					});
 			}
 		};
 		fetchContact();
-	}, [token]);
+	}, [token, navigate]);
 
 	return (
 		<>
@@ -177,8 +189,11 @@ const Contact = () => {
 					required
 				></input>
 				<button type="submit">Ajouter</button>
+				<span style={{ color: "red" }}>{addError}</span>
 			</form>
-			<button onClick={handleDisconnect} className="disconnect">Se deconnecter</button>
+			<button onClick={handleDisconnect} className="disconnect">
+				Se deconnecter
+			</button>
 		</>
 	);
 };

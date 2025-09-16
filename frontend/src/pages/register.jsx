@@ -3,8 +3,10 @@ import "./login.css";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { apiUrl } from "../config/server";
+import { passwordPattern } from "../config/pattern";
 
 const Register = () => {
+	const [registerError, setRegisterError] = useState("");
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
 		email: "",
@@ -23,16 +25,21 @@ const Register = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (formData.password !== formData.confirmPassword) {
-			alert("mot de passes non identiques");
-		} else if (
+		setRegisterError("");
+		if (
 			!formData.password ||
 			!formData.email ||
 			!formData.confirmPassword ||
 			!formData.lastName ||
 			!formData.firstName
 		) {
-			alert("manque de parametres");
+			console.log("manque de parametres");
+		} else if (formData.password !== formData.confirmPassword) {
+			console.log("mot de passes non identiques");
+			setRegisterError("mot de passes non identiques");
+		} else if (!formData.password.match(passwordPattern)) {
+			console.log("mot de passes non conforme");
+			setRegisterError("mot de passes non conforme");
 		} else {
 			axios
 				.post(`${apiUrl}/auth/register`, formData)
@@ -41,11 +48,13 @@ const Register = () => {
 						localStorage.setItem("token", res.data.token);
 						navigate("/");
 					} else {
-						alert("erreur de connexion");
+						console.log("erreur de connexion");
+						setRegisterError("erreur de connexion");
 					}
 				})
 				.catch(() => {
-					alert("erreur de connexion serveur");
+					console.log("erreur de connexion serveur");
+					setRegisterError("erreur de connexion serveur");
 				});
 		}
 	};
@@ -98,6 +107,8 @@ const Register = () => {
 				required
 			/>
 			<button type="submit">Se connecter</button>
+			<Link to="/login">Deja inscrit ? se connecter</Link>
+			<span style={{ color: "red" }}>{registerError}</span>
 		</form>
 	);
 };

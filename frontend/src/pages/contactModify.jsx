@@ -1,28 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { apiUrl } from "../config/server";
 import axios from "axios";
 import "./contactModify.css";
+import { telephonePattern } from "../config/pattern";
 
 const ContactModify = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const token = localStorage.getItem("token");
 
+	const [modifyError, setModifyError] = useState("");
 	const [updatedContact, setUpdatedContact] = useState({
-		firstName: location.state.contact.firstName || "",
-		lastName: location.state.contact.lastName || "",
-		email: location.state.contact.email || "",
-		telephone: location.state.contact.telephone || "",
-		id: location.state.contact._id || ""
+		firstName: location.state?.contact?.firstName || "",
+		lastName: location.state?.contact?.lastName || "",
+		email: location.state?.contact?.email || "",
+		telephone: location.state?.contact?.telephone || "",
+		id: location.state?.contact?._id || ""
 	});
 	const handleModify = async (e) => {
+		setModifyError("");
 		e.preventDefault();
 		if (!token) {
-			alert("manque token");
+			console.log("manque token");
 			navigate("/login");
-		} else if (updatedContact.telephone.length !== 10) {
-			alert("telephone incorect");
+		} else if (
+			updatedContact.telephone.length !== 10 ||
+			!updatedContact.telephone.match(telephonePattern)
+		) {
+			console.log("telephone incorect");
+			setModifyError("telephone incorect");
 		} else {
 			await axios
 				.put(`${apiUrl}/contact`, updatedContact, {
@@ -32,7 +39,8 @@ const ContactModify = () => {
 					navigate("/");
 				})
 				.catch(() => {
-					alert("erreur lors de la modification");
+					console.log("erreur lors de la modification");
+					setModifyError("erreur lors de la modification");
 					navigate("/");
 				});
 		}
@@ -43,6 +51,12 @@ const ContactModify = () => {
 			[e.target.name]: e.target.value
 		});
 	};
+
+	useEffect(() => {
+		if (!location.state?.contact) {
+			navigate("/");
+		}
+	});
 	return (
 		<>
 			<Link to="/">Revenir a mes contacts</Link>
@@ -85,6 +99,7 @@ const ContactModify = () => {
 					required
 				></input>
 				<button type="submit">Ajouter</button>
+				<span style={{ color: "red" }}>{modifyError}</span>
 			</form>
 		</>
 	);

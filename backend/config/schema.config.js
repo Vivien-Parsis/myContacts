@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
     lastName: { type: String, required: true, trim: true },
     firstName: { type: String, required: true, trim: true },
     email: { type: String, required: true, minLength: 6, maxLength: 30, trim: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, minLength: 6, maxLength: 30, match: /^\S{ 6, 30}$/ },
     createdDate: { type: Date, default: Date }
 }, { versionKey: false })
 
@@ -13,7 +13,7 @@ const contactSchema = new mongoose.Schema({
     lastName: { type: String, required: true, trim: true },
     firstName: { type: String, required: true, trim: true },
     email: { type: String, required: true, minLength: 6, maxLength: 30, trim: true },
-    telephone: { type: String, required: true, minLength: 10, maxLength: 10 }
+    telephone: { type: String, required: true, minLength: 10, maxLength: 10, match: /^0\d{9}$/ }
 }, { versionKey: false })
 
 export { userSchema, contactSchema }

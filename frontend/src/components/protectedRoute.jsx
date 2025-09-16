@@ -9,14 +9,14 @@ const ProtectedRoute = ({ children }) => {
 	try {
 		const decoded = jwtDecode(auth);
 		if (!decoded.email) {
-			alert("token jwt invalide");
+			console.log("token jwt invalide");
 			localStorage.removeItem("token");
 			return <Navigate to="/login" />;
 		} else {
 			return children;
 		}
-	} catch (err) {
-		alert("token jwt invalide");
+	} catch {
+		console.log("token jwt invalide");
 		localStorage.removeItem("token");
 		return <Navigate to="/login" />;
 	}
