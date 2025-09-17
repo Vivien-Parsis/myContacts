@@ -11,12 +11,10 @@ Application web avec serveur frontend React et serveur backend en node et expres
 ## Configuration requise
 
 - git
-- node (>=22) et npm, ou Docker
+- node et npm, ou Docker
 - Base de données mongodb externe
 
 ## Instruction d'installation
-
-### Option 1 : En local avec Node.js
 
 - cloner le dépot :
 
@@ -49,11 +47,43 @@ HOST={your_secret_here}
   npm run preview
 ```
 
+## Script
+
+### Backend
+
+- `npm run dev` lancer le serveur en mode devellopement avec nodemon
+- `npm run start` lancer le serveur en mode production
+- `npm run test` lancer les tests
+
+### Frontend
+
+- `npm run dev` lancer le serveur en mode devellopement
+- `npm run build` lancer le build de l'application
+- `npm run preview` lancer la prevusialisation du site
+
 ## Adresse
 
-Frontend : `http://votre-domaine-ou-ip`
+- Frontend : `http://votre-domaine-ou-ip`
 
-Backend : `http://votre-domaine-ou-ip:4000`
+- Backend : `http://votre-domaine-ou-ip:4000`
+
+### Endpoint du Backend
+
+#### Swagger
+
+- `/api-docs`
+
+#### Authentification
+
+- POST `/auth/login` requete pour se connecter (attend un email et password dans le body et renvoie un jwt token)
+- POST `/auth/register` requete pour s'inscrire (attend un lastName, firstName, email et password dans le body et renvoie un jwt token)
+
+#### Contact
+
+- GET `/contact/` recupère les contacts de l'utilisateur actuellement connecté
+- POST `/contact/` rajoute un contact pour l'utilisateur actuellement connecté
+- DELETE `/contact/` supprime un contact pour l'utilisateur actuellement connecté
+- PUT `/contact/` modifie l'un des contacts de l'utilisateur actuellement connecté
 
 ## Auteur
 
