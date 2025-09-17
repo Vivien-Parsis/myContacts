@@ -1,6 +1,7 @@
 import { generateToken } from "../services/auth.service.js"
 import { userModel } from "../models/users.model.js"
 import bcrypt from "bcrypt"
+import { passwordPattern } from "../config/pattern.config.js"
 
 const authController = {
     login: async (req, res) => {
@@ -29,12 +30,20 @@ const authController = {
         }
         if (!currentUser.email || !currentUser.password || !currentUser.lastName || !currentUser.firstName) {
             res.status(422).send({ message: "missing credential" })
+        }else if (!passwordPattern.test(currentUser.password)) {
+            return res.status(422).send({ message: "password must be between 6 and 30 characters with no space" })
         }
         const findUser = await userModel.findOne({ email: currentUser.email })
         if (!findUser) {
             try {
                 const salt = await bcrypt.genSalt(10)
                 const hashedPassword = await bcrypt.hash(currentUser.password, salt)
+                console.log({
+                    email: currentUser.email,
+                    password: hashedPassword,
+                    lastName: currentUser.lastName,
+                    firstName: currentUser.firstName
+                })
                 const insertedUser = await userModel.insertOne({
                     email: currentUser.email,
                     password: hashedPassword,

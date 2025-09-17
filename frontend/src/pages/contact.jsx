@@ -63,7 +63,7 @@ const Contact = () => {
 			console.log("manque des informations");
 		} else if (
 			newContact.telephone.length !== 10 ||
-			!newContact.telephone.match(telephonePattern)
+			!telephonePattern.test(newContact.telephone)
 		) {
 			console.log("telephone incorrect");
 			setAddError("telephone incorrect");

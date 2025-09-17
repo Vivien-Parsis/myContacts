@@ -26,7 +26,7 @@ const ContactModify = () => {
 			navigate("/login");
 		} else if (
 			updatedContact.telephone.length !== 10 ||
-			!updatedContact.telephone.match(telephonePattern)
+			!telephonePattern.test(updatedContact.telephone)
 		) {
 			console.log("telephone incorect");
 			setModifyError("telephone incorect");

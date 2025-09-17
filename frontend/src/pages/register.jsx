@@ -1,7 +1,7 @@
 import { useState } from "react";
-import "./login.css";
+import "./register.css";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { apiUrl } from "../config/server";
 import { passwordPattern } from "../config/pattern";
 
@@ -26,6 +26,7 @@ const Register = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setRegisterError("");
+		console.log(passwordPattern.test(formData.password), passwordPattern, formData.password);
 		if (
 			!formData.password ||
 			!formData.email ||
@@ -37,7 +38,7 @@ const Register = () => {
 		} else if (formData.password !== formData.confirmPassword) {
 			console.log("mot de passes non identiques");
 			setRegisterError("mot de passes non identiques");
-		} else if (!formData.password.match(passwordPattern)) {
+		} else if (!passwordPattern.test(formData.password)) {
 			console.log("mot de passes non conforme");
 			setRegisterError("mot de passes non conforme");
 		} else {

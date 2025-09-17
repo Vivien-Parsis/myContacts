@@ -1,4 +1,4 @@
-# Handi'Map
+# MyContacts
 
 Application web avec serveur frontend React et serveur backend en node et express
 
@@ -46,6 +46,11 @@ HOST={your_secret_here}
   npm install
   npm run preview
 ```
+
+## Utilisateur test
+
+- mail : `test.user@mycontacts.com`
+- password : `test123!`
 
 ## Script
 

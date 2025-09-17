@@ -88,7 +88,7 @@ authRouter.post("/login", authController.login)
  *       409:
  *         description: Utilisateur existe déjà
  *       422:
- *         description: Manque des informations dans le body
+ *         description: Manque des informations dans le body ou mot de passe invalide
  */
 authRouter.post("/register", authController.register)
 
